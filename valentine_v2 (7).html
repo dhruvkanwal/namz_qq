@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibe Coding Sumo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.pink-theme {
+            background: white;
+        }
+
+        .container {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .pink-theme .container {
+            background: #FFE5F0;
+        }
+
+        h1 {
+            color: #FF6600;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .pink-theme h1 {
+            color: #FF69B4;
+            font-size: 2em;
+        }
+
+        button {
+            background: linear-gradient(45deg, #000000, #FF6600);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .pink-theme button {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+
+        /* Floating hearts animation */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #FF69B4;
+            transform: rotate(45deg);
+            animation: float 6s infinite;
+            opacity: 0;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #FF69B4;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 10px;
+        }
+
+        @keyframes float {
+            0% {
+                bottom: -20px;
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+            }
+        }
+
+        /* Celebration animations for page 7 */
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: floatBalloon 8s infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatBalloon {
+            0% {
+                bottom: -60px;
+                opacity: 0;
+                transform: translateX(0) rotate(0deg);
+            }
+            10% {
+                opacity: 0.9;
+            }
+            90% {
+                opacity: 0.9;
+            }
+            100% {
+                bottom: 110vh;
+                opacity: 0;
+                transform: translateX(50px) rotate(20deg);
+            }
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: explode 1.5s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), var(--y)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            animation: fall 4s linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                top: -10px;
+                opacity: 1;
+                transform: rotate(0deg);
+            }
+            100% {
+                top: 100vh;
+                opacity: 0;
+                transform: rotate(720deg);
+            }
+        }
+
+        .party-popper {
+            position: absolute;
+            font-size: 40px;
+            animation: popperSpin 2s ease-in-out infinite;
+        }
+
+        @keyframes popperSpin {
+            0%, 100% {
+                transform: rotate(-15deg) scale(1);
+            }
+            50% {
+                transform: rotate(15deg) scale(1.2);
+            }
+        }
+
+        #page7 h1 {
+            animation: pulse 1.5s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="page1">
+        <img src="https://i.imgur.com/Y40Zg7p.gif" alt="Sumo Wrestler" style="max-width: 200px; margin-bottom: 20px;">
+        <h1>vibe coding sumo</h1>
+        <button onclick="nextPage()">click here if you're cute</button>
+    </div>
+
+    <div class="container" id="page2" style="display: none;">
+        <h1>i can't believe you're impressed by the silliest things, but sumo wrestling is not one of them!</h1>
+        <button onclick="page3()">click here if you're a silly goose</button>
+    </div>
+
+    <div class="container" id="page3" style="display: none;">
+        <h1>okay so lets get to some questions...</h1>
+        <button onclick="page4()">click if you're a cutie poo poo</button>
+    </div>
+
+    <div class="container" id="page4" style="display: none;">
+        <h1>first, how much do you love me?</h1>
+        <button onclick="wrongAnswer()" style="margin: 10px;">not much</button>
+        <button onclick="wrongAnswer()" style="margin: 10px;">kinda</button>
+        <button onclick="page5()" style="margin: 10px;">soooo much</button>
+    </div>
+
+    <div class="container" id="wrongAnswer" style="display: none;">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZHoxc3J5amQ1cXE4cHZ3bzE1aTBzdWo0MmFvcGY5Y202OWc1eml5NyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IL7hXX77O5OIU/giphy.gif" alt="Wrong Answer" style="max-width: 300px; margin-bottom: 20px;">
+        <button onclick="tryAgain()">try again</button>
+    </div>
+
+    <div class="container" id="page5" style="display: none;">
+        <h1>not sure if you know this, but men spend ages thinking, planning, and executing a very important question in their lives.. whether they should ask a girl to marry them. however, fun fact that they learn... they still have to ask another question from time to time!</h1>
+        <button onclick="page6()">click here to reveal the mysterious question</button>
+    </div>
+
+    <div class="container" id="page6" style="display: none;">
+        <h1>cutie, will you be my valentine?</h1>
+        <button onclick="wrongAnswer()" style="margin: 10px;">no</button>
+        <button onclick="page7()" style="margin: 10px;">yes</button>
+    </div>
+
+    <div class="container" id="page7" style="display: none;">
+        <h1>okay, now go kiss your husband so he knows you said yes</h1>
+    </div>
+
+    <script>
+        function nextPage() {
+            document.getElementById('page1').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
+        }
+
+        function page3() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'block';
+            
+            // Change theme to pink
+            document.body.classList.add('pink-theme');
+            
+            // Create floating hearts
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 400);
+            }
+            
+            // Continue creating hearts
+            setInterval(createHeart, 2000);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        function page4() {
+            document.getElementById('page3').style.display = 'none';
+            document.getElementById('page4').style.display = 'block';
+        }
+
+        let wrongAnswerSource = '';
+
+        function wrongAnswer() {
+            // Track which page we're coming from
+            if (document.getElementById('page4').style.display !== 'none') {
+                wrongAnswerSource = 'page4';
+            } else if (document.getElementById('page6').style.display !== 'none') {
+                wrongAnswerSource = 'page6';
+            }
+            
+            const currentPage = document.querySelector('.container:not([style*="display: none"])');
+            if (currentPage) currentPage.style.display = 'none';
+            document.getElementById('wrongAnswer').style.display = 'block';
+        }
+
+        function tryAgain() {
+            document.getElementById('wrongAnswer').style.display = 'none';
+            document.getElementById(wrongAnswerSource).style.display = 'block';
+        }
+
+        function page5() {
+            document.getElementById('page4').style.display = 'none';
+            document.getElementById('page5').style.display = 'block';
+        }
+
+        function page6() {
+            document.getElementById('page5').style.display = 'none';
+            document.getElementById('page6').style.display = 'block';
+        }
+
+        function page7() {
+            document.getElementById('page6').style.display = 'none';
+            document.getElementById('page7').style.display = 'block';
+            
+            // CELEBRATION TIME! 🎉
+            startCelebration();
+        }
+
+        function startCelebration() {
+            // Create TONS of hearts
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createHeart();
+                }, i * 200);
+            }
+            setInterval(createHeart, 500);
+            
+            // Create balloons
+            setInterval(createBalloon, 800);
+            
+            // Create confetti
+            setInterval(createConfetti, 100);
+            
+            // Create fireworks
+            setInterval(createFirework, 1500);
+            
+            // Create party poppers
+            createPartyPoppers();
+        }
+
+        function createBalloon() {
+            const colors = ['#FF69B4', '#FF1493', '#FFB6C1', '#FFC0CB', '#FF6B9D', '#C71585'];
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.style.left = Math.random() * 100 + '%';
+            balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            balloon.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            balloon.style.animationDelay = Math.random() + 's';
+            document.body.appendChild(balloon);
+            
+            setTimeout(() => balloon.remove(), 10000);
+        }
+
+        function createFirework() {
+            const colors = ['#FF69B4', '#FFD700', '#FF1493', '#FFA500', '#FF6B9D', '#FFFF00'];
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * (window.innerHeight * 0.5);
+            
+            // Create burst of particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                const angle = (Math.PI * 2 * i) / 30;
+                const velocity = 50 + Math.random() * 100;
+                particle.style.setProperty('--x', Math.cos(angle) * velocity + 'px');
+                particle.style.setProperty('--y', Math.sin(angle) * velocity + 'px');
+                
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 1500);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#FF69B4', '#FFD700', '#FF1493', '#FFA500', '#FF6B9D', '#87CEEB', '#98FB98'];
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            confetti.style.animationDelay = Math.random() + 's';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 5000);
+        }
+
+        function createPartyPoppers() {
+            const positions = ['10%', '30%', '50%', '70%', '90%'];
+            positions.forEach((pos, index) => {
+                setTimeout(() => {
+                    const popper = document.createElement('div');
+                    popper.className = 'party-popper';
+                    popper.textContent = '🎉';
+                    popper.style.left = pos;
+                    popper.style.top = '20px';
+                    popper.style.animationDelay = (index * 0.2) + 's';
+                    document.body.appendChild(popper);
+                }, index * 300);
+            });
+        }
+    </script>
+</body>
+</html>
